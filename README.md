@@ -6,13 +6,23 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
 ## Fonctionnalités principales
 - **Inscription et connexion des utilisateurs** : Les utilisateurs peuvent s'inscrire et se connecter pour accéder à leurs profils.
 - **Création de CV** : Les utilisateurs peuvent créer des CV en ajoutant des informations personnelles, des expériences professionnelles, des compétences, etc.
-- **Gestion des CV** : Les utilisateurs peuvent visualiser, modifier et supprimer leurs CV.
+- **Gestion des CV** : Les utilisateurs peuvent visualiser, modifier et supprimer leurs CV. Puis il y a la possibilitée de télécharger en pdf le cv avec un style.
 - **Téléchargement de CV en PDF** : Les utilisateurs peuvent télécharger leurs CV au format PDF.
 - **Gestion des projets** : Les utilisateurs peuvent ajouter, visualiser et supprimer leurs projets.
 - **Interface administrateur** : Les administrateurs peuvent gérer les utilisateurs et leurs projets, ainsi que visualiser les CV des utilisateurs.
 
+- **Pannel Administrateur** : Possibilité de modifier et de voir les projets / CV des user, puis la boîte de réception des messages écrit dans l'onglet "contact"
+
+- **Profile** Modification du Nom, Prénom, email et Mot de passe de l'utilisateur
+
+
 ## Fonctionnalités non implémentées
-- CSS basique 
+- N’importe quel utilisateur peut choisir le CV à afficher
+- N’importe quel utilisateur peut faire une recherche parmis les projets
+- Il est possible d’ajouter des commentaires au projets
+- Les projets sont soumis à validation par un admin. Une fois validé le projet est visible.
+- Utiliser compte google (SSO - OAuth2 )
+- La page affiche une carte de la ville qui vous représente
 
 
 ## Prérequis
@@ -31,13 +41,24 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
     ```
 
 3. **Configurer les variables d'environnement :**
-    - Créez un fichier `.env` à la racine du projet en vous basant sur le fichier `.env.example`.
     - Modifiez les paramètres de connexion à la base de données si nécessaire (hôte, nom de la base de données, utilisateur, mot de passe).
 
 4. **Lancer les conteneurs Docker :**
+
     ```bash
-    docker-compose up -d
+    //premier lancement 
+    cd dockerfile
     ```
+
+    ```bash
+    //premier lancement 
+    docker-compose up --build
+    ```
+    ```bash
+    //pour lancer de base  
+    docker compose up -d
+    ```
+
 
 5. **Importer la base de données :**
     - Ouvrez votre navigateur et accédez à `http://localhost:8081` pour accéder à phpMyAdmin.
@@ -50,7 +71,7 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
 
 ## Utilisation
 1. **Accéder à l'application :**
-    - Ouvrez votre navigateur et accédez à `http://localhost/public/index.php`.
+    - Ouvrez votre navigateur et accédez à `http://localhost/View/auth/login.php`.
 
 2. **Créer un compte utilisateur :**
     - Cliquez sur "S'inscrire" et remplissez le formulaire d'inscription.

@@ -1,8 +1,8 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
-// Vérification si l'utilisateur est administrateur
+// Vérif admin connect
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /../View/auth/login.php');
     exit();

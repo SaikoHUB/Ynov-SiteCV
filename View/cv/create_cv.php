@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: /../View/auth/login.php');
@@ -46,8 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':skills', $skills, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
-        $cv_id = $pdo->lastInsertId(); // Récupérer l'ID du CV nouvellement créé
-        header("Location: view_single_cv.php?id=$cv_id"); // Rediriger vers la page de visualisation du CV
+        $cv_id = $pdo->lastInsertId(); 
+        header("Location: view_single_cv.php?id=$cv_id"); 
         exit();
     } else {
         echo "Erreur lors de la création du CV.";

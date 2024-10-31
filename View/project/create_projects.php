@@ -1,16 +1,15 @@
 <?php
 session_start();
 
-// Inclure le fichier database.php pour la connexion à la base de données
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php';
 
-// Vérifie si l'utilisateur est connecté
+// Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: /../View/auth/login.php');
     exit();
 }
 
-// Récupérer l'ID de l'utilisateur connecté
+// Récup id user
 $user_id = $_SESSION['user_id'];
 
 // Créer un nouveau projet
@@ -24,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute([$user_id, $title, $description, $is_favorite]);
     
     if ($stmt->rowCount() > 0) {
-        header('Location: /../app/Models/projects.php'); // Rediriger vers projects.php après la création réussie
+        header('Location: /../app/Models/projects.php'); 
         exit();
     } else {
         echo "Erreur lors de la création du projet.";

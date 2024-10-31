@@ -1,14 +1,14 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
-// Vérification si l'utilisateur est administrateur
+// Vérif admin connect
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /../View/auth/login.php');
     exit();
 }
 
-// Suppression d'un utilisateur si l'ID est fourni via POST
+// Suppression user
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['delete_user_id'])) {
         $delete_user_id = $_POST['delete_user_id'];
@@ -39,13 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Récupération de tous les utilisateurs
+// Récupération 
 $query = "SELECT * FROM users";
 $stmt = $pdo->query($query);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupération de tous les messages
-$query = "SELECT * FROM messages";
+// Récupération messages
+$query = "SELECT messages.id, messages.content, messages.created_at, users.first_name, users.last_name 
+          FROM messages 
+          JOIN users ON messages.user_id = users.id";
 $stmt = $pdo->query($query);
 $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -99,14 +101,16 @@ $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <th>Nom</th>
                 <th>Message</th>
+                <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($messages as $message): ?>
             <tr>
-                <td><?php echo htmlspecialchars($message['user_name']); ?></td>
-                <td><?php echo htmlspecialchars($message['message']); ?></td>
+                <td><?php echo htmlspecialchars($message['first_name'] . ' ' . $message['last_name']); ?></td>
+                <td><?php echo htmlspecialchars($message['content']); ?></td>
+                <td><?php echo htmlspecialchars($message['created_at']); ?></td>
                 <td>
                     <form method="POST" action="admin_dashboard.php" onsubmit="return confirm('Voulez-vous vraiment supprimer ce message ?');" style="display:inline;">
                         <input type="hidden" name="delete_message_id" value="<?php echo $message['id']; ?>">

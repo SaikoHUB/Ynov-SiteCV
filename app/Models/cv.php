@@ -1,9 +1,9 @@
 <?php
 session_start();
-include __DIR__ . '/../../View/partials/header.php'; // Inclusion de l'en-tête
-$pdo = require __DIR__ . '/../../config/database.php'; // Connexion à la base de données
+include __DIR__ . '/../../View/partials/header.php'; 
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
-// Vérification de la session utilisateur
+// Vérif session
 if (!isset($_SESSION['user_id'])) {
     header("Location: /../View/auth/login.php");
     exit();
@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Récupération des CV de l'utilisateur
+// Récup cv usr
 $sql = "SELECT * FROM cvs WHERE user_id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);

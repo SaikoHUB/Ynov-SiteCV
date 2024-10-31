@@ -1,5 +1,5 @@
 header {
-    background-color: #2f4f6f; /* couleur bleu foncé similaire à l'image */
+    background-color: #2f4f6f; 
     padding: 20px 0;
 }
 
@@ -12,17 +12,17 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 25px; /* espacement plus large entre les liens */
+    margin: 0 25px; 
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-size: 18px; /* augmenter la taille de la police */
-    font-weight: bold; /* pour que le texte soit épais comme dans l'image */
+    font-size: 18px; 
+    font-weight: bold; 
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #ff6347; /* couleur de survol */
+    color: #ff6347; 
 }

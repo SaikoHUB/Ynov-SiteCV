@@ -1,18 +1,19 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $user_name = htmlspecialchars($_POST['user_name']);
+    $user_id = $_SESSION['user_id']; 
     $message = htmlspecialchars($_POST['message']);
 
-    $query = "INSERT INTO messages (user_name, message) VALUES (:user_name, :message)";
+    $query = "INSERT INTO messages (user_id, content) VALUES (:user_id, :content)";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':user_name', $user_name);
-    $stmt->bindParam(':message', $message);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':content', $message);
     $stmt->execute();
 
-    header('Location: /../app/Controllers/admin_dashboard.php');
+    header('Location: /../app/models/profile.php');
     exit();
 }
 ?>
@@ -26,36 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="/../public/styles/contact.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/../app/Models/profile.php">Profile</a></li>
-                <li><a href="/../app/Models/cv.php">CV</a></li>
-                <li><a href="/../app/Models/projects.php">Mes projets</a></li>
-                <li><a href="/../View/auth/logout.php">Déconnexion</a></li>
-            </ul>
-        </nav>
+<?php include __DIR__ . '/../../View/partials/header.php'; ?>
     </header>
 
-    <div class="container">
-        <h1>Contact</h1>
-        <form method="POST" action="contact.php">
-            <label for="user_name">Nom:</label>
-            <input type="text" id="user_name" name="user_name" required>
-            <br>
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-            <br>
-            <button type="submit">Envoyer</button>
-        </form>
-    </div>
-
-    <footer>
-        <p>Ynov-CV web</p>
-        <p>
-            <a href="about-us.php" style="color: white;">A propos</a> |
-            <a href="/../app/Models/contact.php" style="color: white;">Contact</a>
-        </p>
-    </footer>
+    <form action="" method="POST">
+        <label for="message">Message :</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Envoyer</button>
+    </form>
+    <?php include __DIR__ . '/../../View/partials/footer.php'; ?>
 </body>
 </html>

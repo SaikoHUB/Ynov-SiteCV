@@ -1,8 +1,8 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
-// Vérification si l'utilisateur est administrateur
+// Vérif admin connect
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /../View/auth/login.php');
     exit();
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $project_id = $_POST['project_id'];
         $title = $_POST['title'];
         $description = $_POST['description'];
-        // Ajoutez ici les autres champs de projet que vous souhaitez modifier
+        
 
         $query = "UPDATE projects SET title = :title, description = :description WHERE id = :id AND user_id = :user_id";
         $stmt = $pdo->prepare($query);
@@ -66,7 +66,6 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <label for="description">Description:</label>
             <textarea id="description" name="description" required><?php echo htmlspecialchars($project['description']); ?></textarea>
             <br>
-            <!-- Ajoutez ici les autres champs de projet que vous souhaitez modifier -->
             <button type="submit">Mettre à jour</button>
         </form>
         <form method="POST" action="edit_user_project.php?user_id=<?php echo $user_id; ?>" onsubmit="return confirm('Voulez-vous vraiment supprimer ce projet ?');">

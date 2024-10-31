@@ -25,7 +25,6 @@ h2 {
     color: #555;
 }
 
-/* Styles pour les formulaires */
 form {
     display: flex;
     flex-direction: column;

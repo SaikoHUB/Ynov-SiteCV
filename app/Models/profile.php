@@ -1,7 +1,6 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Inclusion du fichier de connexion à la base de données
-
+$pdo = require __DIR__ . '/../../config/database.php'; 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -9,33 +8,29 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Récupération des informations de l'utilisateur connecté
+// Récup info usr
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Mise à jour des informations
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $password = $_POST['password']; // Assurez-vous de gérer le hachage du mot de passe lors de la modification
+    $password = $_POST['password']; // Mot de passe
     $admin_password_input = $_POST['admin_password']; // Mot de passe admin
 
-    // Vérifier si le mot de passe administrateur est correct
-    $admin_password = 'admin123'; // Définissez ici votre mot de passe administrateur (à protéger dans la réalité)
+    // Vérif mdp
+    $admin_password = 'admin123'; // MOT DE PASS ADMIN
     
     if (!empty($admin_password_input) && $admin_password_input === $admin_password) {
-        // Si le mot de passe admin est correct, rediriger vers le dashboard admin
         $_SESSION['role'] = 'admin';
         header("Location: /../app/Controllers/admin_dashboard.php");
         exit();
     }
 
-    // Si le mot de passe est modifié, on le hache
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $update_query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
         $stmt = $pdo->prepare($update_query);
         $stmt->execute([$first_name, $last_name, $email, $hashed_password, $user_id]);
     } else {
-        // Si le mot de passe n'est pas modifié, ne pas le changer dans la base de données
         $update_query = "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
         $stmt = $pdo->prepare($update_query);
         $stmt->execute([$first_name, $last_name, $email, $user_id]);
@@ -48,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Récupération des informations actuelles de l'utilisateur
 $query = "SELECT * FROM users WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$user_id]);

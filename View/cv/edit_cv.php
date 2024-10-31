@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = require __DIR__ . '/../../config/database.php'; // Chemin mis à jour
+$pdo = require __DIR__ . '/../../config/database.php'; 
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: /../View/auth/login.php');
@@ -23,7 +23,6 @@ if (!$cv) {
     die("CV non trouvé.");
 }
 
-// Décoder les champs JSON
 $career = json_decode($cv['career'], true);
 $education = json_decode($cv['education'], true);
 $skills = json_decode($cv['skills'], true);

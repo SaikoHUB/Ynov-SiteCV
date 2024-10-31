@@ -1,17 +1,16 @@
 <?php
-// Démarrer la session
 session_start();
 
-// Connexion à la base de données
+// Connexion db
 $pdo = require __DIR__ . '/../../config/database.php';
 
-// Récupérer les données du formulaire
+// Récup données form
 $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 
-// Valider les données du formulaire
+// valid form
 if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
     die("All fields are required.");
 }
@@ -19,7 +18,7 @@ if ($password !== $confirm_password) {
     die("Passwords do not match.");
 }
 
-// Vérifier si l'email existe déjà
+// Vérif emial
 $sql = "SELECT COUNT(*) FROM users WHERE email = :email";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':email', $email);
@@ -28,10 +27,10 @@ if ($stmt->fetchColumn() > 0) {
     die("Email already exists.");
 }
 
-// Hasher le mot de passe
+// Hasher
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-// Insérer l'utilisateur dans la base de données
+// Insér user
 $sql = "INSERT INTO users (email, first_name, last_name, password, role) VALUES (:email, :first_name, :last_name, :password, 'user')";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':email', $email);
@@ -40,17 +39,17 @@ $stmt->bindParam(':last_name', $username);
 $stmt->bindParam(':password', $hashed_password);
 
 if ($stmt->execute()) {
-    // Récupérer l'ID de l'utilisateur nouvellement créé
+    // Récup id user
     $user_id = $pdo->lastInsertId();
 
-    // Créer une session pour l'utilisateur
+    // Créer session
     $_SESSION['user_id'] = $user_id;
 
     // Rediriger vers la page de index
     header("Location: /../public/index.php");
     exit();
 } else {
-    // Afficher un message d'erreur si l'insertion échoue
+    // error
     die("Error: " . $stmt->errorInfo()[2]);
 }
 ?>

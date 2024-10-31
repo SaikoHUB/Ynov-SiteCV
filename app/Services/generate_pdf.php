@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../vendor/fpdf/fpdf/original/fpdf.php'; // Chemin mis à jour
+require __DIR__ . '/../../vendor/fpdf/fpdf/original/fpdf.php'; 
 $pdo = require __DIR__ . '/../../config/database.php';
 session_start();
 
@@ -24,12 +24,11 @@ if (!$cv) {
     die("CV non trouvé.");
 }
 
-// Décoder les champs JSON
+
 $career = json_decode($cv['career'], true);
 $education = json_decode($cv['education'], true);
 $skills = json_decode($cv['skills'], true);
 
-// Récupérer les couleurs du formulaire
 $bg_color = isset($_POST['bg_color']) ? $_POST['bg_color'] : '#ffffff';
 $text_color = isset($_POST['text_color']) ? $_POST['text_color'] : '#000000';
 
@@ -49,14 +48,12 @@ class PDF extends FPDF
 
     function Header()
     {
-        // Couleur de fond pour toute la page
         list($r, $g, $b) = sscanf($this->bg_color, "#%02x%02x%02x");
         $this->SetFillColor($r, $g, $b);
         $this->Rect(0, 0, $this->GetPageWidth(), $this->GetPageHeight(), 'F');
 
-        // Couleur de fond pour le titre
         $this->SetFont('Arial', 'B', 12);
-        $this->SetFillColor(200, 220, 255); // Couleur de fond pour le titre
+        $this->SetFillColor(200, 220, 255); 
         $this->Cell(0, 10, utf8_decode($this->title), 0, 1, 'C', true);
     }
 
@@ -77,7 +74,7 @@ class PDF extends FPDF
 $pdf = new PDF($bg_color, $text_color, $cv['title']);
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 12);
-$pdf->SetTextColorFromHex($text_color); // Couleur du texte
+$pdf->SetTextColorFromHex($text_color); 
 
 $pdf->Cell(0, 10, utf8_decode('Titre: ' . $cv['title']), 0, 1);
 $pdf->Cell(0, 10, utf8_decode('Nom: ' . $cv['first_name'] . ' ' . $cv['last_name']), 0, 1);
