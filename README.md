@@ -27,9 +27,15 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
 
 ## Prérequis
 - Docker
-- Docker Compose
+- PHP-8.4.1
 
 ## Installation
+
+1. **Installation de PHP-8.4.1 :**
+
+    Se rendre sur le site php.net et installer la version php-8.4.1 pour windows, après installer extraire le fichier dans un disque local ex:  ```C://php``` puis se rendre dans le paramètre ```Variables d'environnement pour votre compte```, selectionner la variable ```Path``` puis créer une nouvelle variable d'enronnement, pour cela copier le lien du fichier php comment dans l'exemple précédent ex ```C://php```.
+
+
 1. **Cloner le dépôt :**
     ```bash
     git clone https://github.com/SaikoHUB/Php-CV.git
@@ -37,18 +43,13 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
 
 2. **Déplacez-vous dans le répertoire du projet :**
     ```bash
-    cd Php-CV
+    cd Ynov-SiteCV
     ```
 
 3. **Configurer les variables d'environnement :**
     - Modifiez les paramètres de connexion à la base de données si nécessaire (hôte, nom de la base de données, utilisateur, mot de passe).
 
 4. **Lancer les conteneurs Docker :**
-
-    ```bash
-    //premier lancement 
-    cd dockerfile
-    ```
 
     ```bash
     //premier lancement 
@@ -71,7 +72,7 @@ Ce projet est une application web pour créer et gérer des CV en utilisant PHP.
 
 ## Utilisation
 1. **Accéder à l'application :**
-    - Ouvrez votre navigateur et accédez à `http://localhost/View/auth/login.php`.
+    - Ouvrez votre navigateur et accédez à `http://localhost:8080/View/auth/signup.php`.
 
 2. **Créer un compte utilisateur :**
     - Cliquez sur "S'inscrire" et remplissez le formulaire d'inscription.
